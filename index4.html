@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feliz Aniversario</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #e7f0fa;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .contador {
+      font-size: 1.5rem;
+    }
+    .header {
+      background: linear-gradient(135deg, #3b82f6, #60a5fa);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+    .gallery-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .section-title {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      color: #1d4ed8;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>💙 ¡Feliz Aniversario, amor! 💙</h1>
+    <p class="contador" id="contador"></p>
+  </div>
+
+  <div class="container">
+    <!-- Galería de Fotos -->
+    <h2 class="section-title">Nuestros Momentos</h2>
+    <div class="row g-3">
+      <div class="col-md-4">
+        <img src="https://via.placeholder.com/400x300" class="gallery-img" alt="Momento 1">
+        <p>Primera salida juntos</p>
+      </div>
+      <div class="col-md-4">
+        <img src="https://via.placeholder.com/400x300" class="gallery-img" alt="Momento 2">
+        <p>Un día especial</p>
+      </div>
+      <div class="col-md-4">
+        <img src="https://via.placeholder.com/400x300" class="gallery-img" alt="Momento 3">
+        <p>Recuerdo inolvidable</p>
+      </div>
+    </div>
+
+    <!-- Acontecimientos importantes -->
+    <h2 class="section-title">Acontecimientos importantes</h2>
+    <ul>
+      <li>07/09/2024 – Nos conocimos</li>
+      <li>18/09/2024 – Empezamos nuestra historia 💕</li>
+      <li>... agrega más aquí</li>
+    </ul>
+
+    <!-- Próximas fechas -->
+    <h2 class="section-title">Fechas importantes próximas</h2>
+    <ul>
+      <li>🎂 Cumpleaños de ella: 10 de julio</li>
+      <li>🎂 Mi cumpleaños: 16 de septiembre</li>
+      <li>🎉 Próximo aniversario mensual: <span id="proximo-aniversario"></span></li>
+    </ul>
+  </div>
+
+  <script>
+    const fechaInicio = new Date("2024-09-18T20:00:00");
+
+    function actualizarContador() {
+      const ahora = new Date();
+      let diff = ahora - fechaInicio;
+
+      const segundos = Math.floor(diff / 1000) % 60;
+      const minutos = Math.floor(diff / (1000 * 60)) % 60;
+      const horas = Math.floor(diff / (1000 * 60 * 60)) % 24;
+      const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const meses = Math.floor(dias / 30);
+      const diasRestantes = dias % 30;
+
+      document.getElementById("contador").innerText =
+        `${meses} meses, ${diasRestantes} días, ${horas}h ${minutos}m ${segundos}s juntos 💖`;
+    }
+
+    setInterval(actualizarContador, 1000);
+    actualizarContador();
+
+    // Calcular próximo aniversario mensual
+    function calcularProximoAniversario() {
+      const hoy = new Date();
+      let prox = new Date(fechaInicio);
+      while (prox < hoy) {
+        prox.setMonth(prox.getMonth() + 1);
+      }
+      document.getElementById("proximo-aniversario").innerText = prox.toLocaleDateString('es-ES');
+    }
+    calcularProximoAniversario();
+  </script>
+</body>
+</html>

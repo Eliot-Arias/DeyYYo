@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¡Feliz Aniversario, amor!</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #4A90E2;
+      --secondary-color: #FF6B9D;
+      --accent-color: #FFE4E1;
+      --text-dark: #2C3E50;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+
+    .navbar {
+      background: rgba(255, 255, 255, 0.95) !important;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      color: var(--primary-color) !important;
+    }
+
+    .nav-link {
+      color: var(--text-dark) !important;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--secondary-color) !important;
+    }
+
+    .hero-section {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 100px 0 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="hearts" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><text x="10" y="15" text-anchor="middle" fill="rgba(255,255,255,0.1)" font-size="12">♥</text></pattern></defs><rect width="100" height="100" fill="url(%23hearts)"/></svg>');
+      animation: float 20s ease-in-out infinite;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .countdown {
+      font-size: 1.5rem;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 20px;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      display: inline-block;
+      margin-top: 20px;
+    }
+
+    .section {
+      padding: 80px 0;
+      background: white;
+    }
+
+    .section:nth-child(even) {
+      background: var(--accent-color);
+    }
+
+    .section-title {
+      color: var(--primary-color);
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 3rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: var(--secondary-color);
+      border-radius: 2px;
+    }
+
+    /* Slider Styles */
+    .photo-slider {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .slider-container {
+      position: relative;
+      width: 100%;
+      height: 500px;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .slide.active {
+      opacity: 1;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .slide-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+      color: white;
+      padding: 40px 20px 20px;
+      text-align: center;
+    }
+
+    .slide-caption h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .slider-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      color: var(--primary-color);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .slider-nav:hover {
+      background: white;
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .slider-nav.prev {
+      left: 20px;
+    }
+
+    .slider-nav.next {
+      right: 20px;
+    }
+
+    .slider-dots {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #ccc;
+      margin: 0 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .dot.active {
+      background: var(--secondary-color);
+    }
+
+    /* Timeline Styles */
+    .timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .timeline::after {
+      content: '';
+      position: absolute;
+      width: 4px;
+      background: var(--primary-color);
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      margin-left: -2px;
+    }
+
+    .timeline-item {
+      padding: 20px 40px;
+      position: relative;
+      background: inherit;
+      width: 50%;
+    }
+
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      right: -10px;
+      background: var(--secondary-color);
+      border: 4px solid white;
+      top: 30px;
+      border-radius: 50%;
+      z-index: 1;
+    }
+
+    .timeline-item:nth-child(even) {
+      left: 50%;
+    }
+
+    .timeline-item:nth-child(even)::after {
+      left: -10px;
+    }
+
+    .timeline-content {
+      padding: 20px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .timeline-date {
+      color: var(--secondary-color);
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    /* Cards */
+    .memory-card {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      height: 100%;
+    }
+
+    .memory-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .memory-card i {
+      font-size: 3rem;
+      color: var(--secondary-color);
+      margin-bottom: 20px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .countdown {
+        font-size: 1.2rem;
+        padding: 15px;
+      }
+
+      .timeline::after {
+        left: 31px;
+      }
+
+      .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+      }
+
+      .timeline-item::after {
+        left: 21px;
+      }
+
+      .timeline-item:nth-child(even) {
+        left: 0%;
+      }
+
+      .slider-container {
+        height: 300px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#inicio">
+        <i class="fas fa-heart"></i> Nuestro Amor
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#inicio">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#momentos">Nuestros Momentos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#historia">Nuestra Historia</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#fechas">Fechas Importantes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#recuerdos">Recuerdos</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="inicio" class="hero-section">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <i class="fas fa-heart"></i> ¡Feliz Aniversario, amor! <i class="fas fa-heart"></i>
+        </h1>
+        <div class="countdown">
+          <div id="countdown-timer">
+            <span id="months">9</span> meses,
+            <span id="days">2</span> días,
+            <span id="hours">6</span>h
+            <span id="minutes">34</span>m
+            <span id="seconds">35</span>s juntos ❤️
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Nuestros Momentos Section -->
+  <section id="momentos" class="section">
+    <div class="container">
+      <h2 class="section-title">Nuestros Momentos</h2>
+      <div class="photo-slider">
+        <div class="slider-container">
+          <div class="slide active">
+            <img src="/placeholder.svg?height=500&width=800" alt="Momento 1">
+            <div class="slide-caption">
+              <h3>Primera salida juntos</h3>
+              <p>El día que todo comenzó, cuando supimos que éramos especiales</p>
+            </div>
+          </div>
+          <div class="slide">
+            <img src="/placeholder.svg?height=500&width=800" alt="Momento 2">
+            <div class="slide-caption">
+              <h3>Un día especial</h3>
+              <p>Momentos que quedarán grabados en nuestros corazones para siempre</p>
+            </div>
+          </div>
+          <div class="slide">
+            <img src="/placeholder.svg?height=500&width=800" alt="Momento 3">
+            <div class="slide-caption">
+              <h3>Recuerdo inolvidable</h3>
+              <p>Cada momento contigo es un tesoro que guardo con amor</p>
+            </div>
+          </div>
+          <div class="slide">
+            <img src="/placeholder.svg?height=500&width=800" alt="Momento 4">
+            <div class="slide-caption">
+              <h3>Aventuras juntos</h3>
+              <p>Explorando el mundo de la mano, creando memorias únicas</p>
+            </div>
+          </div>
+          <div class="slide">
+            <img src="/placeholder.svg?height=500&width=800" alt="Momento 5">
+            <div class="slide-caption">
+              <h3>Momentos íntimos</h3>
+              <p>Las pequeñas cosas que hacen grande nuestro amor</p>
+            </div>
+          </div>
+        </div>
+        <button class="slider-nav prev" onclick="changeSlide(-1)">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="slider-nav next" onclick="changeSlide(1)">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+      <div class="slider-dots">
+        <span class="dot active" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+        <span class="dot" onclick="currentSlide(5)"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Historia Section -->
+  <section id="historia" class="section">
+    <div class="container">
+      <h2 class="section-title">Nuestra Historia</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-date">07/09/2024</div>
+            <h3>Nos conocimos</h3>
+            <p>El día que nuestros caminos se cruzaron y cambió todo para siempre. Fue como si el destino hubiera
+              conspirado para unirnos.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-date">18/09/2024</div>
+            <h3>Empezamos nuestra historia ❤️</h3>
+            <p>El momento en que decidimos escribir juntos la historia más hermosa de nuestras vidas. Desde entonces,
+              cada día es una nueva página de amor.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-date">Próximamente...</div>
+            <h3>Más aventuras nos esperan</h3>
+            <p>Cada día que pasa, nuestro amor se fortalece más. El futuro está lleno de promesas y sueños por cumplir
+              juntos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fechas Importantes Section -->
+  <section id="fechas" class="section">
+    <div class="container">
+      <h2 class="section-title">Fechas Importantes Próximas</h2>
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <div class="memory-card">
+            <i class="fas fa-birthday-cake"></i>
+            <h4>Cumpleaños de ella</h4>
+            <p class="timeline-date">10 de julio</p>
+            <p>Un día especial para celebrar a la persona más importante de mi vida</p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="memory-card">
+            <i class="fas fa-gift"></i>
+            <h4>Mi cumpleaños</h4>
+            <p class="timeline-date">16 de septiembre</p>
+            <p>Otro año de vida para amarte más y crear nuevos recuerdos juntos</p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="memory-card">
+            <i class="fas fa-calendar-heart"></i>
+            <h4>Próximo aniversario mensual</h4>
+            <p class="timeline-date">18/6/2025</p>
+            <p>Cada mes que pasa es una nueva razón para celebrar nuestro amor</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recuerdos Section -->
+  <section id="recuerdos" class="section">
+    <div class="container">
+      <h2 class="section-title">Nuestros Recuerdos Especiales</h2>
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <div class="memory-card">
+            <i class="fas fa-heart"></i>
+            <h4>Primer "Te amo"</h4>
+            <p>Las palabras más hermosas que han salido de nuestros corazones, sellando para siempre nuestro compromiso
+              de amor.</p>
+          </div>
+        </div>
+        <div class="col-md-6 mb-4">
+          <div class="memory-card">
+            <i class="fas fa-star"></i>
+            <h4>Nuestra canción</h4>
+            <p>Esa melodía que siempre nos transporta a nuestros momentos más especiales y que baila en nuestros
+              corazones.</p>
+          </div>
+        </div>
+        <div class="col-md-6 mb-4">
+          <div class="memory-card">
+            <i class="fas fa-camera"></i>
+            <h4>Primera foto juntos</h4>
+            <p>La imagen que capturó el inicio de nuestra historia, cuando aún no sabíamos todo lo que vendría después.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 mb-4">
+          <div class="memory-card">
+            <i class="fas fa-moon"></i>
+            <h4>Noches de conversación</h4>
+            <p>Esas largas conversaciones hasta altas horas donde conocimos nuestras almas y nos enamoramos más
+              profundamente.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="hero-section" style="padding: 40px 0;">
+    <div class="container text-center">
+      <h3>Con todo mi amor ❤️</h3>
+      <p>Cada día contigo es un regalo, cada momento una bendición.</p>
+      <p><i class="fas fa-infinity"></i> Para siempre y un día más <i class="fas fa-infinity"></i></p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Slider functionality
+    let slideIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    let slideInterval;
+
+    function showSlide(index) {
+      slides.forEach(slide => slide.classList.remove('active'));
+      dots.forEach(dot => dot.classList.remove('active'));
+
+      slideIndex = index;
+      if (slideIndex >= slides.length) slideIndex = 0;
+      if (slideIndex < 0) slideIndex = slides.length - 1;
+
+      slides[slideIndex].classList.add('active');
+      dots[slideIndex].classList.add('active');
+    }
+
+    function changeSlide(direction) {
+      showSlide(slideIndex + direction);
+      resetInterval();
+    }
+
+    function currentSlide(index) {
+      showSlide(index - 1);
+      resetInterval();
+    }
+
+    function nextSlide() {
+      showSlide(slideIndex + 1);
+    }
+
+    function resetInterval() {
+      clearInterval(slideInterval);
+      slideInterval = setInterval(nextSlide, 5000);
+    }
+
+    // Auto-play slider
+    slideInterval = setInterval(nextSlide, 5000);
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Countdown timer (you can customize the start date)
+    function updateCountdown() {
+      const startDate = new Date('2024-09-18T00:00:00');
+      const now = new Date();
+      const diff = now - startDate;
+
+      const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.44));
+      const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 30.44)) / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById('months').textContent = months;
+      document.getElementById('days').textContent = days;
+      document.getElementById('hours').textContent = hours;
+      document.getElementById('minutes').textContent = minutes;
+      document.getElementById('seconds').textContent = seconds;
+    }
+
+    // Update countdown every second
+    setInterval(updateCountdown, 1000);
+    updateCountdown(); // Initial call
+
+    // Navbar background on scroll
+    window.addEventListener('scroll', function () {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 50) {
+        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+      } else {
+        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+      }
+    });
+
+    // Add animation on scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observe all cards and timeline items
+    document.querySelectorAll('.memory-card, .timeline-item').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+  </script>
+</body>
+
+</html>
